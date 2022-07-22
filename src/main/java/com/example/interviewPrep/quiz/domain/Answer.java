@@ -1,4 +1,4 @@
-package com.example.interviewPrep.quiz.models;
+package com.example.interviewPrep.quiz.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 

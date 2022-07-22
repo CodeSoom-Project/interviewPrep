@@ -1,7 +1,7 @@
 package com.example.interviewPrep.quiz.repository;
 
 
-import com.example.interviewPrep.quiz.models.Question;
+import com.example.interviewPrep.quiz.domain.Question;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,8 +18,15 @@ public class QuestionRepository {
     public void save(Question question){
         em.persist(question);
     }
+    public Question update(Question question){
+        return em.merge(question);
+    }
 
-    public Question findOne(Long id){
+    public void delete(Question question){
+        em.remove(question);
+    }
+
+    public Question findById(Long id){
         return em.find(Question.class, id);
     }
 

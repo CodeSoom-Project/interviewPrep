@@ -1,6 +1,7 @@
 package com.example.interviewPrep.quiz.repository;
 
-import com.example.interviewPrep.quiz.models.Question;
+import com.example.interviewPrep.quiz.domain.Question;
+import com.example.interviewPrep.quiz.dto.QuestionDTO;
 import com.example.interviewPrep.quiz.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
+@Rollback(false)
 class QuestionRepositoryTest {
 
     @Autowired
@@ -29,37 +30,37 @@ class QuestionRepositoryTest {
     QuestionRepository questionRepository;
 
     @Test
-    @Transactional
-    @Rollback(false)
-    public void save() throws Exception{
+    public void save(){
 
         // Given
-        Question question = new Question();
-        question.setTitle("test2");
-        question.setType("java");
-
-        // When
-        Long savedId = questionService.add(question);
-
-        // Then
-        assertEquals(question, questionRepository.findOne(savedId));
-
-    }
-
-    @Test
-    @Transactional
-    @Rollback(false)
-    public void findByType() throws Exception{
-
-        // Given
-        Question question = new Question();
-        question.setType("java2");
+        Question question = Question.builder()
+                .title("problem2")
+                .type("java")
+                .build();
 
         // When
         questionRepository.save(question);
 
         // Then
-        Question result = questionRepository.findByType("java2").get(0);
+        Long savedId = question.getId();
+        assertEquals(question, questionRepository.findById(savedId));
+
+    }
+
+    @Test
+    public void findByType() throws Exception{
+
+        // Given
+        Question question = Question.builder()
+                .title("problem333")
+                .type("java22")
+                .build();
+
+        // When
+        questionRepository.save(question);
+
+        // Then
+        Question result = questionRepository.findByType("java22").get(0);
         assertThat(question).isEqualTo(result);
 
     }

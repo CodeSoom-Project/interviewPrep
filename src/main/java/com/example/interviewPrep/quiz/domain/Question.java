@@ -1,18 +1,17 @@
-package com.example.interviewPrep.quiz.models;
+package com.example.interviewPrep.quiz.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.UUID;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Question {
 
     @Id @GeneratedValue
@@ -22,4 +21,8 @@ public class Question {
     private String title;
     private String type;
 
+    public void change(String title, String type){
+        this.title = title;
+        this.type = type;
+    }
 }
