@@ -3,6 +3,7 @@ package com.example.interviewPrep.quiz.repository;
 import com.example.interviewPrep.quiz.domain.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface QuestionRepository {
     Question save(Question question);
     void delete(Question question);
 
+    @Query(value = "SELECT * FROM Question order by RAND() limit 10",nativeQuery = true)
+    List<Question> findRamdom();
 }
